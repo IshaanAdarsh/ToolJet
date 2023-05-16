@@ -71,7 +71,7 @@ mv /tmp/.env ~/app/.env
 mv /tmp/setup_app ~/app/setup_app
 sudo chmod +x ~/app/setup_app
 
-npm install -g npm@8.11.0
+npm install -g npm@8.5.0
 
 # Building ToolJet app
 npm install -g @nestjs/cli
