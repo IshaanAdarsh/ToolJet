@@ -17,7 +17,7 @@ export const DropDown = function DropDown({
   dataCy,
 }) {
   let { label, value, advanced, schema, placeholder, display_values, values } = properties;
-  const { selectedTextColor, borderRadius, visibility, disabledState, justifyContent } = styles;
+  const { selectedTextColor, borderRadius, visibility, disabledState, justifyContent, boxShadow } = styles;
   const [currentValue, setCurrentValue] = useState(() => (advanced ? findDefaultItem(schema) : value));
   const { value: exposedValue } = exposedVariables;
 
@@ -161,7 +161,7 @@ export const DropDown = function DropDown({
       background: darkMode ? 'rgb(31,40,55)' : 'white',
       minHeight: height,
       height: height,
-      boxShadow: state.isFocused ? null : null,
+      boxShadow: state.isFocused ? boxShadow : boxShadow,
       borderRadius: Number.parseFloat(borderRadius),
     }),
 
@@ -192,19 +192,19 @@ export const DropDown = function DropDown({
     option: (provided, state) => {
       const styles = darkMode
         ? {
-            color: state.isDisabled ? '#889096' : 'white',
+            color: state.isDisabled ? '#88909698' : 'white',
             backgroundColor: state.value === currentValue ? '#3650AF' : 'rgb(31,40,55)',
             ':hover': {
-              backgroundColor: state.isDisabled ? '#F1F3F5' : state.value === currentValue ? '#1F2E64' : '#323C4B',
+              backgroundColor: state.isDisabled ? 'transparent' : state.value === currentValue ? '#1F2E64' : '#323C4B',
             },
             maxWidth: 'auto',
             minWidth: 'max-content',
           }
         : {
             backgroundColor: state.value === currentValue ? '#7A95FB' : 'white',
-            color: state.isDisabled ? '#889096' : state.value === currentValue ? 'white' : 'black',
+            color: state.isDisabled ? '#88909694' : state.value === currentValue ? 'white' : 'black',
             ':hover': {
-              backgroundColor: state.isDisabled ? '#F1F3F5' : state.value === currentValue ? '#3650AF' : '#d8dce9',
+              backgroundColor: state.isDisabled ? 'transparent' : state.value === currentValue ? '#3650AF' : '#d8dce9',
             },
             maxWidth: 'auto',
             minWidth: 'max-content',

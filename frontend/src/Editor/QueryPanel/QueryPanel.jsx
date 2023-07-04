@@ -17,12 +17,10 @@ const QueryPanel = ({
   apps,
   allComponents,
   appId,
-  editingVersionId,
   appDefinition,
   dataSourceModalHandler,
   editorRef,
   onQueryPaneDragging,
-  isVersionReleased,
   handleQueryPaneExpanding,
 }) => {
   const { setSelectedQuery, updateQueryPanelHeight, setUnSavedChanges, setSelectedDataSource } = useQueryPanelActions();
@@ -43,7 +41,7 @@ const QueryPanel = ({
   const [queryCancelData, setCancelData] = useState({});
   const [draftQuery, setDraftQuery] = useState(null);
   const [editingQuery, setEditingQuery] = useState(dataQueries.length > 0);
-  const windowSize = useWindowResize();
+  const [windowSize, isWindowResizing] = useWindowResize();
 
   useEffect(() => {
     if (!editingQuery && selectedQuery !== null && selectedQuery?.id !== 'draftQuery') {
@@ -66,7 +64,12 @@ const QueryPanel = ({
 
   useEffect(() => {
     updateQueryPanelHeight(queryPaneRef?.current?.offsetHeight);
-  }, [windowSize.height, isExpanded]);
+    if (isWindowResizing) {
+      onQueryPaneDragging(true);
+    } else {
+      onQueryPaneDragging(false);
+    }
+  }, [windowSize.height, isExpanded, isWindowResizing]);
 
   const createDraftQuery = useCallback((queryDetails, source) => {
     setSelectedQuery(queryDetails.id, queryDetails);
@@ -262,7 +265,6 @@ const QueryPanel = ({
                   mode={editingQuery ? 'edit' : 'create'}
                   dataQueriesChanged={updateDataQueries}
                   appId={appId}
-                  editingVersionId={editingVersionId}
                   currentState={currentState}
                   darkMode={darkMode}
                   apps={apps}
@@ -273,7 +275,6 @@ const QueryPanel = ({
                   createDraftQuery={createDraftQuery}
                   isUnsavedQueriesAvailable={isUnsavedQueriesAvailable}
                   updateDraftQueryName={updateDraftQueryName}
-                  isVersionReleased={isVersionReleased}
                 />
               </div>
             </div>
